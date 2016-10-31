@@ -6,12 +6,8 @@ import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.component.Compone
 import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.service.IVehicleService;
 import org.junit.Before;
 import org.junit.Test;
-import org.junit.runners.Parameterized;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.web.WebAppConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.ResourceUtils;
 
 import java.io.File;

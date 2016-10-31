@@ -1,7 +1,6 @@
 package at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.component.parser.sumo;
 
 import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Data;
-import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Timestep;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Vehicle;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.component.parser.exception.ParserException;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.service.IVehicleService;
@@ -12,7 +11,6 @@ import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
 import javax.xml.stream.XMLStreamException;
 import javax.xml.stream.events.Attribute;
-import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.io.InputStream;

@@ -1,7 +1,6 @@
 package at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.dao;
 
 import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Timestep;
-import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Vehicle;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 /**

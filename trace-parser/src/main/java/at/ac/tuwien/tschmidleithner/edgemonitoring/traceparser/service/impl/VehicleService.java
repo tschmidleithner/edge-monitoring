@@ -10,7 +10,6 @@ import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.service.AbstractS
 import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.service.IVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
-import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 

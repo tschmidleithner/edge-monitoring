@@ -1,7 +1,9 @@
 package at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.dao;
 
-import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.*;
-import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.service.IVehicleService;
+import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Data;
+import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Timestep;
+import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Vehicle;
+import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.VehicleTimestep;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
