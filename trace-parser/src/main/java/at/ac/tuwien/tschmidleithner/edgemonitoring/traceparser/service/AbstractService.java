@@ -3,10 +3,12 @@ package at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.service;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.IEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  * Abstract service to provide basic CRUD operations.
@@ -14,7 +16,7 @@ import java.io.Serializable;
 @Transactional
 public abstract class AbstractService<T extends IEntity<ID>, ID extends Serializable> implements ICrudService<T, ID> {
 
-    protected abstract PagingAndSortingRepository<T, ID> getRepository();
+    protected abstract JpaRepository<T, ID> getRepository();
 
     @Override
     @Transactional
@@ -26,6 +28,12 @@ public abstract class AbstractService<T extends IEntity<ID>, ID extends Serializ
     @Transactional(readOnly = true)
     public Page<T> findAll(Pageable pageable) {
         return getRepository().findAll(pageable);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<T> findAll() {
+        return getRepository().findAll();
     }
 
     @Override

@@ -1,6 +1,7 @@
 package at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.dao;
 
 import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.*;
+import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.service.IVehicleService;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,39 @@ public class TimestepTest extends DaoTest {
         addTimestepEntry(2L, 0.1, 16.374918, 48.191782, 0f);
     }
 
+    @Test
+    public void addVehicleAndTimestepTest() throws Exception {
+        assertThat(vehicleDao.findOne(0L).getVehicleTimesteps().size()).isEqualToComparingFieldByField(2);
+        assertThat(vehicleDao.findOne(1L).getVehicleTimesteps().size()).isEqualToComparingFieldByField(2);
+        assertThat(vehicleDao.findOne(2L).getVehicleTimesteps().size()).isEqualToComparingFieldByField(1);
+    }
+
+    @Test
+    public void checkForCorrectTimestepData() throws Exception {
+        List<VehicleTimestep> vehicleTimesteps = vehicleDao.findOne(1L).getVehicleTimesteps();
+        for (VehicleTimestep vt : vehicleTimesteps) {
+            if (vt.getTimestep().getTime().equals(0.0)) {
+                assertThat(vt.getData().getLatitude()).isEqualTo(16.365407);
+                assertThat(vt.getData().getLongitude()).isEqualTo(48.217178);
+            } else if (vt.getTimestep().getTime().equals(0.1)) {
+                assertThat(vt.getData().getLatitude()).isEqualTo(16.365487);
+                assertThat(vt.getData().getLongitude()).isEqualTo(48.217188);
+            } else {
+                assert false;
+            }
+        }
+        assertThat(vehicleTimesteps.size()).isGreaterThan(0);
+    }
+
+    /**
+     * Helper method for adding a timestep entry by reusing vehicles and timesteps if already persisted.
+     *
+     * @param vehicleId
+     * @param time
+     * @param latitude
+     * @param longitude
+     * @param speed
+     */
     private void addTimestepEntry(Long vehicleId, Double time, Double latitude, Double longitude, Float speed) {
         Vehicle vehicle = vehicleDao.findOne(vehicleId);
         if (vehicle == null) {
@@ -60,29 +94,5 @@ public class TimestepTest extends DaoTest {
 
         vehicle.getVehicleTimesteps().add(vehicleTimestep);
         vehicleDao.save(vehicle);
-    }
-
-    @Test
-    public void addVehicleAndTimestepTest() throws Exception {
-        assertThat(vehicleDao.findOne(0L).getVehicleTimesteps().size()).isEqualToComparingFieldByField(2);
-        assertThat(vehicleDao.findOne(1L).getVehicleTimesteps().size()).isEqualToComparingFieldByField(2);
-        assertThat(vehicleDao.findOne(2L).getVehicleTimesteps().size()).isEqualToComparingFieldByField(1);
-    }
-
-    @Test
-    public void checkForCorrectTimestepData() throws Exception {
-        List<VehicleTimestep> vehicleTimesteps = vehicleDao.findOne(1L).getVehicleTimesteps();
-        for (VehicleTimestep vt : vehicleTimesteps) {
-            if (vt.getTimestep().getTime().equals(0.0)) {
-                assertThat(vt.getData().getLatitude()).isEqualTo(16.365407);
-                assertThat(vt.getData().getLongitude()).isEqualTo(48.217178);
-            } else if (vt.getTimestep().getTime().equals(0.1)) {
-                assertThat(vt.getData().getLatitude()).isEqualTo(16.365487);
-                assertThat(vt.getData().getLongitude()).isEqualTo(48.217188);
-            } else {
-                assert false;
-            }
-        }
-        assertThat(vehicleTimesteps.size()).isGreaterThan(0);
     }
 }

@@ -9,7 +9,7 @@ public class Vehicle implements IEntity<Long> {
     @Id
     private Long id;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.vehicle", cascade=CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.vehicle", cascade=CascadeType.ALL)
     private List<VehicleTimestep> vehicleTimesteps = new ArrayList<>();
 
     @Override

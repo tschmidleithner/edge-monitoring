@@ -1,5 +1,7 @@
 package at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.component.parser.sumo;
 
+import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Data;
+import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Timestep;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Vehicle;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.component.parser.exception.ParserException;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.service.IVehicleService;
@@ -57,8 +59,8 @@ public class SumoTraceParser implements ISumoTraceParser {
             throw new ParserException(e);
         }
 
+        Double currentTimestep = 0.0;
         while (xmlEventReader.hasNext()) {
-            Vehicle vehicle = new Vehicle();
             XMLEvent xmlEvent;
 
             try {
@@ -67,28 +69,22 @@ public class SumoTraceParser implements ISumoTraceParser {
                 throw new ParserException(e);
             }
 
-            /*
-            TODO
             if (xmlEvent.isStartElement()) {
                 StartElement startElement = xmlEvent.asStartElement();
                 // If we have an item element, we create a new item
                 if (startElement.getName().getLocalPart() == XML_TIMESTEP) {
-                    vehicles = new ArrayList<>();
-                    timestep = new Timestep<>();
                     // Read the attributes from this tag and add the time
                     // attribute to our object
                     Iterator<Attribute> attributes = startElement.getAttributes();
                     while (attributes.hasNext()) {
                         Attribute attribute = attributes.next();
                         if (attribute.getName().toString().equals(XML_TIMESTEP_TIME_ATTRIBUTE)) {
-                            timestep.setTime(Double.parseDouble(attribute.getValue()));
+                            currentTimestep = Double.parseDouble(attribute.getValue());
                         }
-
                     }
                 } else if (startElement.getName().getLocalPart() == XML_TIMESTEP_VEHICLE) {
+                    Data data = new Data();
                     Vehicle vehicle = new Vehicle();
-                    GPSLocation location = new GPSLocation();
-                    location.setVehicle(vehicle);
 
                     Iterator<Attribute> attributes = startElement.getAttributes();
                     while (attributes.hasNext()) {
@@ -98,17 +94,22 @@ public class SumoTraceParser implements ISumoTraceParser {
                             vehicle.setId(Long.parseLong(attribute.getValue()));
                         } else if (attr.equals(XML_VEHICLE_LATITUDE_ATTRIBUTE)) {
                             String latitude = attribute.getValue();
-                            location.setLatitude(Double.parseDouble(latitude));
+                            data.setLatitude(Double.parseDouble(latitude));
                         } else if (attr.equals(XML_VEHICLE_LONGITUDE_ATTRIBUTE)) {
                             String longitude = attribute.getValue();
-                            location.setLongitude(Double.parseDouble(longitude));
+                            data.setLongitude(Double.parseDouble(longitude));
+                        } else if (attr.equals(XML_VEHICLE_SPEED_ATTRIBUTE)) {
+                            String speed = attribute.getValue();
+                            data.setSpeed(Float.parseFloat(speed));
                         }
                     }
-                    vehicle.setLocation(location);
-                    vehicles.add(vehicle);
+
+                    // persist vehicle and timestep
+                    vehicleService.addTimestepEntry(vehicle.getId(), currentTimestep, data.getLatitude(), data.getLongitude(), data.getSpeed());
                 }
             }
 
+            /*
             // If we reach the end of an item element, we add it to the list
             if (xmlEvent.isEndElement()) {
                 EndElement endElement = xmlEvent.asEndElement();
@@ -117,9 +118,8 @@ public class SumoTraceParser implements ISumoTraceParser {
                     timesteps.add(timestep);
                     System.out.println(timestep.getVehicles().size());
                 }
-            }*/
-
-            vehicleService.save(vehicle);
+            }
+            */
         }
     }
 }
