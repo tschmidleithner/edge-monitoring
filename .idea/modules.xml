@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/edge-monitoring.iml" filepath="$PROJECT_DIR$/.idea/modules/edge-monitoring.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/shared.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/shared.iml" group="shared" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/shared_main.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/shared_main.iml" group="shared" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/shared/shared_test.iml" filepath="$PROJECT_DIR$/.idea/modules/shared/shared_test.iml" group="shared" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/trace-parser/trace-parser.iml" filepath="$PROJECT_DIR$/.idea/modules/trace-parser/trace-parser.iml" group="trace-parser" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/trace-parser/trace-parser_main.iml" filepath="$PROJECT_DIR$/.idea/modules/trace-parser/trace-parser_main.iml" group="trace-parser" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/trace-parser/trace-parser_test.iml" filepath="$PROJECT_DIR$/.idea/modules/trace-parser/trace-parser_test.iml" group="trace-parser" />
+    </modules>
+  </component>
+</project>

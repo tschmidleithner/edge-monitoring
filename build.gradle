@@ -1,0 +1,10 @@
+group 'at.ac.tuwien.tschmidleithner'
+version '1.0-SNAPSHOT'
+
+allprojects {
+
+}
+
+task wrapper(type: Wrapper) {
+    gradleVersion = '3.0'
+}
