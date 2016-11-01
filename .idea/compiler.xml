@@ -19,6 +19,8 @@
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="cloudlet_main" target="1.8" />
+      <module name="cloudlet_test" target="1.8" />
       <module name="edge-monitoring_main" target="1.5" />
       <module name="edge-monitoring_test" target="1.5" />
       <module name="shared_main" target="1.8" />

@@ -13,7 +13,7 @@ public class Timestep implements IEntity<Long> {
 
     private Double time;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "id.timestep")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "id.timestep")
     private List<VehicleTimestep> vehicleTimesteps = new ArrayList<>();
 
     @Override

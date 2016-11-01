@@ -3,6 +3,7 @@ package at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.service;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.IEntity;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -45,5 +46,11 @@ public abstract class AbstractService<T extends IEntity<ID>, ID extends Serializ
     @Transactional
     public void delete(ID id) {
         getRepository().delete(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<T> findAll(Sort sort) {
+        return getRepository().findAll(sort);
     }
 }

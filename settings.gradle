@@ -1,4 +1,5 @@
 rootProject.name = 'edge-monitoring'
 include 'trace-parser'
 include 'shared'
+include 'cloudlet'
 

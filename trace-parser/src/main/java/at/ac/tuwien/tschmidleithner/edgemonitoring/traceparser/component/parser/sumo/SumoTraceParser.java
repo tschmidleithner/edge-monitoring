@@ -3,6 +3,7 @@ package at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.component.parser
 import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Data;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Vehicle;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.component.parser.exception.ParserException;
+import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.component.simulator.ISimulator;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.service.IVehicleService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -20,6 +21,7 @@ import java.util.Iterator;
 public class SumoTraceParser implements ISumoTraceParser {
 
     private IVehicleService vehicleService;
+    private ISimulator simulator;
 
     /**
      * SUMO XML trace schema
@@ -42,8 +44,9 @@ public class SumoTraceParser implements ISumoTraceParser {
     private static String XML_VEHICLE_SPEED_ATTRIBUTE = "speed";
 
     @Autowired
-    public SumoTraceParser(IVehicleService vehicleService) {
+    public SumoTraceParser(IVehicleService vehicleService, ISimulator simulator) {
         this.vehicleService = vehicleService;
+        this.simulator = simulator;
     }
 
     @Override
@@ -69,10 +72,11 @@ public class SumoTraceParser implements ISumoTraceParser {
 
             if (xmlEvent.isStartElement()) {
                 StartElement startElement = xmlEvent.asStartElement();
-                // If we have an item element, we create a new item
+
                 if (startElement.getName().getLocalPart() == XML_TIMESTEP) {
-                    // Read the attributes from this tag and add the time
-                    // attribute to our object
+                    // found timestep element
+
+                    // Read the attributes from this tag and cache time attribute
                     Iterator<Attribute> attributes = startElement.getAttributes();
                     while (attributes.hasNext()) {
                         Attribute attribute = attributes.next();
@@ -81,9 +85,13 @@ public class SumoTraceParser implements ISumoTraceParser {
                         }
                     }
                 } else if (startElement.getName().getLocalPart() == XML_TIMESTEP_VEHICLE) {
+                    // found vehicle element
+
                     Data data = new Data();
                     Vehicle vehicle = new Vehicle();
 
+                    // Read the attributes from this tag and add properties
+                    // to our data object
                     Iterator<Attribute> attributes = startElement.getAttributes();
                     while (attributes.hasNext()) {
                         Attribute attribute = attributes.next();
@@ -106,18 +114,9 @@ public class SumoTraceParser implements ISumoTraceParser {
                     vehicleService.addTimestepEntry(vehicle.getId(), currentTimestep, data.getLatitude(), data.getLongitude(), data.getSpeed());
                 }
             }
-
-            /*
-            // If we reach the end of an item element, we add it to the list
-            if (xmlEvent.isEndElement()) {
-                EndElement endElement = xmlEvent.asEndElement();
-                if (endElement.getName().getLocalPart() == (XML_TIMESTEP) && timestep != null) {
-                    timestep.setVehicles(vehicles);
-                    timesteps.add(timestep);
-                    System.out.println(timestep.getVehicles().size());
-                }
-            }
-            */
         }
+
+        // finished
+        simulator.startSimulation();
     }
 }

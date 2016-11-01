@@ -3,9 +3,11 @@ package at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.component.parser
 import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.Vehicle;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.shared.domain.VehicleTimestep;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.component.ComponentTest;
+import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.component.simulator.ISimulator;
 import at.ac.tuwien.tschmidleithner.edgemonitoring.traceparser.service.IVehicleService;
 import org.junit.Before;
 import org.junit.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.util.ResourceUtils;
@@ -28,9 +30,12 @@ public class SumoTraceParserTest extends ComponentTest {
     @Autowired
     private IVehicleService vehicleService;
 
+    @Autowired
+    private ISimulator simulator;
+
     @Before
     public void setUp() throws Exception {
-        sumoTraceParser = new SumoTraceParser(vehicleService);
+        sumoTraceParser = new SumoTraceParser(vehicleService, simulator);
     }
 
     @Test
